@@ -1,4 +1,5 @@
 use crate::candidate_hydrators::core_data_candidate_hydrator::CoreDataCandidateHydrator;
+use crate::candidate_hydrators::ceb_color_hydrator::CebColorHydrator;
 use crate::candidate_hydrators::gizmoduck_hydrator::GizmoduckCandidateHydrator;
 use crate::candidate_hydrators::in_network_candidate_hydrator::InNetworkCandidateHydrator;
 use crate::candidate_hydrators::subscription_hydrator::SubscriptionHydrator;
@@ -35,6 +36,8 @@ use crate::params;
 use crate::query_hydrators::user_action_seq_query_hydrator::UserActionSeqQueryHydrator;
 use crate::query_hydrators::user_features_query_hydrator::UserFeaturesQueryHydrator;
 use crate::scorers::author_diversity_scorer::AuthorDiversityScorer;
+use crate::scorers::ceb_bias_selector::CebBiasSelectorScorer;
+use crate::scorers::ceb_color_merge_scorer::CebColorMergeScorer;
 use crate::scorers::oon_scorer::OONScorer;
 use crate::scorers::phoenix_scorer::PhoenixScorer;
 use crate::scorers::weighted_scorer::WeightedScorer;
@@ -103,6 +106,7 @@ impl PhoenixCandidatePipeline {
             Box::new(VideoDurationCandidateHydrator::new(tes_client.clone()).await),
             Box::new(SubscriptionHydrator::new(tes_client.clone()).await),
             Box::new(GizmoduckCandidateHydrator::new(gizmoduck_client).await),
+            Box::new(CebColorHydrator::default()),
         ];
 
         // Filters
@@ -123,11 +127,15 @@ impl PhoenixCandidatePipeline {
         let phoenix_scorer = Box::new(PhoenixScorer { phoenix_client });
         let weighted_scorer = Box::new(WeightedScorer);
         let author_diversity_scorer = Box::new(AuthorDiversityScorer::default());
+        let color_merge_scorer = Box::new(CebColorMergeScorer);
+        let bias_selector_scorer = Box::new(CebBiasSelectorScorer);
         let oon_scorer = Box::new(OONScorer);
         let scorers: Vec<Box<dyn Scorer<ScoredPostsQuery, PostCandidate>>> = vec![
             phoenix_scorer,
             weighted_scorer,
             author_diversity_scorer,
+            color_merge_scorer,
+            bias_selector_scorer,
             oon_scorer,
         ];
 

@@ -24,6 +24,17 @@ pub struct PostCandidate {
     pub retweeted_screen_name: Option<String>,
     pub visibility_reason: Option<vf::FilteredReason>,
     pub subscription_author_id: Option<u64>,
+    pub ceb_color_hex: Option<String>,
+    pub ceb_color_merge_hex: Option<String>,
+    pub ceb_color_merge_score: Option<f64>,
+    pub ceb_entropy: Option<f64>,
+    pub ceb_quantum_gain: Option<f64>,
+    pub ceb_drift: Option<f64>,
+    pub ceb_idea_tags: Vec<String>,
+    pub ceb_bias_x: Option<f64>,
+    pub ceb_bias_y: Option<f64>,
+    pub ceb_bias_sentiment: Option<f64>,
+    pub ceb_bias_score: Option<f64>,
 }
 
 #[derive(Clone, Debug, Default)]
