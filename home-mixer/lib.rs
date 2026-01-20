@@ -1,5 +1,10 @@
 mod candidate_hydrators;
 mod candidate_pipeline;
+mod ceb;
+mod ceb_ideas;
+mod ceb_orbit_table;
+mod ceb_bias_fields;
+mod ceb_orb_tree;
 pub mod clients; // Excluded from open source release for security reasons
 mod filters;
 pub mod params; // Excluded from open source release for security reasons

@@ -33,6 +33,8 @@ Both sources are combined and ranked together using **Phoenix**, a Grok-based tr
 
 We have eliminated every single hand-engineered feature and most heuristics from the system. The Grok-based transformer does all the heavy lifting by understanding your engagement history (what you liked, replied to, shared, etc.) and using that to determine what content is relevant to you.
 
+The feed now also applies a **CEB (Color Entropy Bridge)** layer that assigns a color signature to each post via an LLM-style colorizer, merges that with the viewer’s historical engagement palette, and nudges ranking toward posts whose color blends best with the user’s past viewing patterns. A quantum-inspired CEB metric (entropy, drift, gain) further tunes those blends per post, while a bias selector pin (left/right and up/down frequency) modulates color-mix weighting.
+
 ---
 
 ## System Architecture
